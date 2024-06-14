@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Api\V1\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,10 +30,15 @@ class AuthController extends Controller
             ]);
         }
 
-        return $user->createToken('token-name')->plainTextToken;
+        return $this->response([
+            'token' => $user->createToken('token-name')->plainTextToken
+        ]);
     }
 
-    public function logout()
+    /**
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
     {
         $user = Auth::user();
 
@@ -40,9 +46,8 @@ class AuthController extends Controller
             $user->tokens()->delete();
         }
 
-        return response()->json([
-            'message' => 'success',
-            'logout' => 'logged out'
+        return $this->response([
+            'logout' => true
         ]);
     }
 }

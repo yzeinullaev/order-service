@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Api\V1\Controllers\Auth\AuthController;
+use App\Http\Api\V1\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,13 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'user'], function () {
-        Route::get('login', [AuthController::class, 'login']);
-        Route::get('logout', [AuthController::class, 'logout']);
+
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('logout', [AuthController::class, 'logout']);
 
         // Получения данных о заказах пользователя
-        Route::get('order', [AuthController::class, 'logout']);
+        Route::get('order', [OrderController::class, 'getUserOrder']);
     });
 });
 
