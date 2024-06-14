@@ -38,10 +38,6 @@ class UserOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => [
-                'required',
-                'integer',
-            ],
             'page' => [
                 'integer',
             ],
