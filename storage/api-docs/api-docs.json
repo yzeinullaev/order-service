@@ -1,0 +1,134 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Order Service (API)",
+        "description": "<b>Описание:</b>",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/v1/user/order": {
+            "get": {
+                "tags": [
+                    "user order v1"
+                ],
+                "summary": "Получения данных о заказах пользователя",
+                "description": "Получения данных о заказах пользователя",
+                "operationId": "getUserOrderId",
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 7777
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "title": "Статус",
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "title": "Сообщение",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "title": "Data",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "response": {
+                                                        "title": "response",
+                                                        "type": "array",
+                                                        "items": {}
+                                                    },
+                                                    "error": {
+                                                        "title": "error",
+                                                        "type": "string"
+                                                    },
+                                                    "status_code": {
+                                                        "title": "status_code",
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Full authentication is required to access this resource",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Uncaught ErrorException: Attempt to read property ______",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserOrderRequest": {
+                "title": "UserOrderRequest",
+                "description": "Order status request params",
+                "properties": {
+                    "user_id": {
+                        "title": "ID пользователя",
+                        "type": "integer"
+                    },
+                    "page": {
+                        "title": "Страница",
+                        "type": "integer"
+                    },
+                    "limit": {
+                        "title": "Лимит",
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "example": {
+                    "user_id": 777,
+                    "page": 1,
+                    "limit": 0
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Authorization token",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Orders",
+            "description": "API Endpoints of Orders"
+        }
+    ]
+}
